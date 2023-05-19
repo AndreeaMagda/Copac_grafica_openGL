@@ -127,7 +127,7 @@ void myInit(void) {
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-
+	
 	// sursa lumina
 	float lightAmbient[] = { 0.4f, 0.4f, 0.4f, 1.0f };
 	float lightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -198,11 +198,10 @@ void desenareCopac() {
 
 void desenareModel(bool umbra) {
 	if (umbra) {
-		//glColor3f(0, 0.15, 0.05);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
-	
+		glColor3f(0, 0.15, 0.05);
+	}
+	else {
+		glColor3f(0, 0.3, 1);
 	}
 	glPushMatrix();
 	glTranslatef(modelX, -30, 0);
@@ -215,7 +214,7 @@ void desenareModel(bool umbra) {
 
 void desenareIarba() {
 	glPushMatrix();
-	glColor3f(0, 0.5, 0);
+	glColor3f(0.0, 0.5, 0);
 	glTranslatef(0, -0.9, 0);
 	glBegin(GL_QUADS);
 	{
@@ -243,27 +242,35 @@ void CALLBACK display(void) {
 	glLoadIdentity();
 	glTranslatef(0, 0, -150);
 	glRotatef(15, 1, 0, 0);
-
+	
 	computeShadowMatrix(punctePlanIarba, lightSourcePosition);
-
+	
 	glPushMatrix();
 	glLightfv(GL_LIGHT0, GL_POSITION, lightSourcePosition);
+
 	desenareIarba();
+
 	desenareModel(false);
 	glPopMatrix();
 
 	//deseneaza umbra
 	glDisable(GL_LIGHTING);
-
+	glEnable(GL_BLEND);
+	
 	glPushMatrix();
+	
+	
 	glMultMatrixf((GLfloat*)matriceUmbrire); // se inmulteste matricea curenta cu matricea de umbrire
+	glBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
 	desenareModel(true);
 	glPopMatrix();
+	glDisable(GL_BLEND);
 	deseneazaLumina();
 
 	glEnable(GL_LIGHTING);
 
 	auxSwapBuffers();
+	
 }
 
 void CALLBACK myReshape(GLsizei w, GLsizei h) {
