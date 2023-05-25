@@ -280,9 +280,17 @@ void desenareMar() {
 
 	glPushMatrix();
 	glTranslated(-15, marY + 20,30.0);
-	glColor3f(1.0, 0.0, 1.0);
+	glColor3f(1.0, 0.0, 0.0);
 	auxSolidSphere(3);
 	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-7, marY + 30, 20.0);
+	glColor3f(1.0, 0.0, 0.0);
+	auxSolidSphere(3);
+	glPopMatrix();
+
+	
 	
 
 	glPopMatrix();
