@@ -16,6 +16,9 @@ const int A = 0, B = 1, C = 2, D = 3; // used only for indexing
 static float lightSourcePosition[4] = { -60, 50, -40, 1 };
 static float modelX = 0;
 static float angle = 0;
+static float angle2 = 0;
+float marY = 10.0f;
+bool mereCazute = false;
 
 GLfloat punctePlanIarba[][3] = {
 	{ -150.0f, -60.0f, -150.0f },
@@ -52,11 +55,11 @@ void CALLBACK mutaSursaStanga() {
 }
 
 void CALLBACK rotireDreapta() {
-	angle -= 2;
+	angle2 -= 2;
 }
 
 void CALLBACK rotireStanga() {
-	angle += 2;
+	angle2 += 2;
 }
 
 void CALLBACK mutaStanga()
@@ -127,7 +130,7 @@ void myInit(void) {
 
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
-	
+
 	// sursa lumina
 	float lightAmbient[] = { 0.4f, 0.4f, 0.4f, 1.0f };
 	float lightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -157,40 +160,31 @@ void desenareCopac() {
 	glColor3f(0.5, 0.25, 0.1);
 	glPushMatrix();
 	auxSolidCylinder(7, 90);
-
 	glPopMatrix();
+
 	glTranslated(0, 10, 5.0);
 	glColor3f(0.0, 0.5, 0.0);
 	glPushMatrix();
 	auxSolidSphere(17);
-
 	glPopMatrix();
+
 	glTranslated(3, 0, 5.0);
 	glColor3f(0.0, 0.5, 0.0);
 	glPushMatrix();
 	auxSolidSphere(17);
-
-
-
-
 	glPopMatrix();
 
 	glTranslated(-5, -10, 5.0);
 	glColor3f(0.0, 0.5, 0.0);
 	glPushMatrix();
 	auxSolidSphere(17);
-
 	glPopMatrix();
 
 	glTranslated(-5, 0, 0.0);
 	glColor3f(0.0, 0.5, 0.0);
 	glPushMatrix();
 	auxSolidSphere(17);
-
-
 	glPopMatrix();
-
-	
 
 	glTranslated(15, 0, 0.0);
 	glColor3f(0.0, 0.5, 0.0);
@@ -204,15 +198,11 @@ void desenareCopac() {
 	auxSolidSphere(17);
 	glPopMatrix();
 
-
 	glTranslated(-25, 0.0, -15.0);
 	glColor3f(0.0, 0.5, 0.0);
 	glPushMatrix();
 	auxSolidSphere(17);
 	glPopMatrix();
-
-
-
 
 	glTranslated(15, 0.0, 0.0);
 	glColor3f(0.0, 0.5, 0.0);
@@ -220,23 +210,12 @@ void desenareCopac() {
 	auxSolidSphere(17);
 	glPopMatrix();
 
-
-	
-	/*glTranslated(-10, 5.0, 2.0);
-	glColor3f(0.0, 0.0, 0.0);
-	glPushMatrix();
-	auxSolidSphere(17);
-	glPopMatrix();*/
-
-	
 	glTranslated(5, 10, 5.0);
 	glColor3f(0.0, 0.5, 0.0);
 	glPushMatrix();
 	auxSolidSphere(17);
 	glPopMatrix();
 
-	
-	
 	glTranslated(-25, -7, 10.0);
 	glColor3f(0.0, 0.5, 0.0);
 	glPushMatrix();
@@ -247,20 +226,67 @@ void desenareCopac() {
 	glColor3f(0.0, 0.5, 0.0);
 	glPushMatrix();
 	auxSolidSphere(17);
-
 	glPopMatrix();
 
 	glPopMatrix();
 }
 
-void desenareMar(){
-	glPushMatrix();
+void desenareMar() {
 
-	glTranslated(-25, 10, 0.0);
+	glPushMatrix(); 
+	glPushMatrix();
+	glTranslated(-20, marY, 0.0);
 	glColor3f(1.0, 0.0, 0.0);
-	//glPushMatrix();
+    auxSolidSphere(5);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(30, marY+10, 0.0);
+	glColor3f(1.0, 0.0, 0.0);
 	auxSolidSphere(5);
 	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-5, marY+20, -20.0);
+	glColor3f(1.0, 0.0, 0.0);
+	auxSolidSphere(4);
+	glPopMatrix();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(5, marY + 5, -25.0);
+	glColor3f(1.0, 0.0, 0.0);
+	auxSolidSphere(4);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(5.0, marY + 5, 33.0);
+	glColor3f(1.0, 0.0, 0.0);
+	auxSolidSphere(3);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(25.0, marY + 20, 17.0);
+	glColor3f(1.0, 0.0, 0.0);
+	auxSolidSphere(4);
+	glPopMatrix();
+
+
+	glPushMatrix();
+	glTranslated(-20, marY + 20, -10.0);
+	glColor3f(1.0, 0.0, 0.0);
+	auxSolidSphere(3);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(-15, marY + 20,30.0);
+	glColor3f(1.0, 0.0, 1.0);
+	auxSolidSphere(3);
+	glPopMatrix();
+	
+
+	glPopMatrix();
+
 }
 
 
@@ -273,7 +299,7 @@ void desenareModel(bool umbra) {
 	}
 	glPushMatrix();
 	glTranslatef(modelX, -30, 0);
-	glRotatef(angle, 0, 1, 0);
+	glRotatef(angle2, 0, 1, 0);
 	desenareCopac();
 	desenareMar();
 	glPopMatrix();
@@ -309,12 +335,12 @@ void CALLBACK display(void) {
 
 	glLoadIdentity();
 	glTranslatef(0, 0, -150);
-	
+
 	glRotatef(15, 1, 0, 0);
 
-	
+
 	computeShadowMatrix(punctePlanIarba, lightSourcePosition);
-	
+
 	glPushMatrix();
 	glLightfv(GL_LIGHT0, GL_POSITION, lightSourcePosition);
 
@@ -326,10 +352,10 @@ void CALLBACK display(void) {
 	//deseneaza umbra
 	glDisable(GL_LIGHTING);
 	glEnable(GL_BLEND);
-	
+
 	glPushMatrix();
-	
-	
+
+
 	glMultMatrixf((GLfloat*)matriceUmbrire); // se inmulteste matricea curenta cu matricea de umbrire
 	glBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
 	desenareModel(true);
@@ -340,7 +366,7 @@ void CALLBACK display(void) {
 	glEnable(GL_LIGHTING);
 
 	auxSwapBuffers();
-	
+
 }
 
 void CALLBACK myReshape(GLsizei w, GLsizei h) {
@@ -350,6 +376,27 @@ void CALLBACK myReshape(GLsizei w, GLsizei h) {
 	glLoadIdentity();
 	gluPerspective(60.0, 1.0 * (GLfloat)w / (GLfloat)h, 10, 300.0);
 	glMatrixMode(GL_MODELVIEW);
+}
+
+void CALLBACK IdleFunction()
+{
+
+	if (!mereCazute) {
+		angle += 1;
+
+		marY -= 0.1f;
+
+	}
+	
+
+	if (marY < -35.0f) {
+		marY = 10.0;
+		mereCazute = true;
+	}
+	
+	display();
+
+	//Sleep(1000 / 60);
 }
 
 int main(int argc, char** argv) {
@@ -365,6 +412,7 @@ int main(int argc, char** argv) {
 	auxKeyFunc(AUX_a, mutaSursaStanga);
 	auxInitWindow("Copac");
 	myInit();
+	auxIdleFunc(IdleFunction);
 	auxReshapeFunc(myReshape);
 	auxMainLoop(display);
 	return 0;
